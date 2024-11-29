@@ -1,5 +1,5 @@
 use iced::{
-    alignment::{Horizontal, Vertical}, executor, widget::Text, Application, Color, Command, Element, Length, Settings, Subscription, Theme
+    alignment::{Horizontal, Vertical}, executor, widget::Text, Application, Command, Element, Length, Settings, Subscription, Theme
 };
 use iced::time;
 
@@ -14,6 +14,7 @@ pub fn main() -> iced::Result {
                 height: 600.0,
             },
             ..Default::default()
+
         },
         ..Default::default()
     })
@@ -34,6 +35,8 @@ impl Application for TofuApp {
     type Message = Message;
     type Theme = Theme;
     type Flags = ();
+
+    
 
     fn new(_flags: ()) -> (Self, Command<Self::Message>) {
         (
@@ -61,27 +64,25 @@ impl Application for TofuApp {
     }
 
     fn subscription(&self) -> Subscription<Self::Message> {
-        time::every(std::time::Duration::from_secs(5)).map(|_| Message::Tick)
+        time::every(std::time::Duration::from_secs(1)).map(|_| Message::Tick)
     }
 
     fn view(&self) -> Element<Self::Message> {
         let price = self
             .current_price
             .as_deref()
-            .unwrap_or("Cargando precio...");
+            .and_then(|price| price.parse::<f64>().ok()) 
+            .map(|price| format!("{:.2}", price))
+            .unwrap_or_else(|| "0".to_string());
 
-        Text::new(price)
+
+        Text::new(price + "$")
             .size(60)
             .horizontal_alignment(Horizontal::Center)
             .vertical_alignment(Vertical::Center)
             .width(Length::Fill)
             .height(Length::Fill)
-            // white text
             .into()
-    }
-
-    fn theme(&self) -> Theme {
-        Theme::default()
     }
 }
 

@@ -8,7 +8,6 @@ pub async fn connect_to_binance(symbol: &str) -> Option<TradeResponse> {
     let url = format!("wss://stream.binance.com:9443/ws/{}@trade", symbol.to_lowercase());
 
     let (ws_stream, _) = connect_async(url).await.expect("Failed to connect");
-    println!("Connected to WebSocket!");
 
     let (mut write, mut read) = ws_stream.split();
 
@@ -28,7 +27,6 @@ pub async fn connect_to_ticker(symbol: &str) -> Option<TickerResponse> {
     let url = format!("wss://stream.binance.com:9443/ws/{}@ticker", symbol.to_lowercase());
 
     let (ws_stream, _) = connect_async(url).await.expect("Failed to connect");
-    println!("Connected to WebSocket!");
 
     let (_, mut read) = ws_stream.split();
 
