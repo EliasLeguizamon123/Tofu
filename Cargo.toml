@@ -4,9 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-iced = "0.13.1"
-tokio = { version = "1", features = ["full"] }
+iced = { version = "0.12.1", features = ["advanced", "image", "smol", "tokio"] }
+# tokio = { version = "1.0", features = ["full"] }
 tokio-tungstenite = { version = "0.18", features = ["native-tls"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 futures-util = "0.3"
+async-stream = "0.3"
+futures = "0.3"
+async-std = { version = "1.0", features = ["attributes", "tokio1"] }
